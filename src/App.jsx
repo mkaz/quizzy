@@ -2,7 +2,9 @@ import
 	React, 
 	{ useEffect, useState } from 'react';
 
-const LENGTH = 6;
+import Problem from './Problem';
+
+const LENGTH = 60;
 
 const App = () => {
 	
@@ -19,7 +21,6 @@ const App = () => {
 			}, 1000 );
 
 			// clean up timer
-			console.log("Clearing Interval", timeRemaining )
 			return () => clearTimeout(timer);
 		}
 		if ( timeRemaining <= 0 ) {
@@ -27,9 +28,7 @@ const App = () => {
 		}
 	}, [ hasStarted, timeRemaining ]);
 
-	const startGame = () => {
-		setStarted( true );
-	};
+	
 
 	return (
 		<main>
@@ -41,13 +40,20 @@ const App = () => {
 					<div>
 						Time Remaining: { timeRemaining } secs					
 						{ isGameOver ?
-							<div>Results</div>
+							<div className="results">
+								{ correct } out of { correct + incorrect }
+							</div>
 							:
-							<div>Problem</div>
+							<Problem
+								onCorrect={ () => setCorrect(correct+1) }
+								onIncorrect={ () => setIncorrect(incorrect+1) }
+							/>
 						}
 					</div>
 					: 
-					<button onClick={ startGame }>
+					<button 
+						className="start-game"
+						onClick={ () => setStarted(true) }>
 						Start Game
 					</button>
 				}

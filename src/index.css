@@ -23,3 +23,59 @@ div.board {
 	margin: 32px 0;
 
 }
+
+.problem-table {
+	margin: 16px auto;
+	font-size: 36px;
+	font-weight: bold;
+	border-bottom: 4px solid #333;
+}
+
+.problem-table td {
+	padding: 8px;
+}
+
+.tda,
+.tdb {
+	text-align: right;
+}
+
+/* Hide Arrows/Spinners from number input */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+form {
+	margin: 0 auto;
+	width: 200px;
+}
+
+.answer-field {
+	width: 75px;
+	margin-left: 60px;
+	font-size: 36px;
+	font-weight: bold;
+	text-align: right;
+}
+
+input[type=submit] {
+	margin: 0 0 0 8px;
+	padding: 4px 8px;
+}
+
+button.start-game {
+	display: block;
+	margin: 96px auto;
+	font-size: 36px;
+	font-weight: bold;
+	padding: 16px;
+}
