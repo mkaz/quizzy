@@ -4,7 +4,7 @@ import
 
 import Problem from './Problem';
 
-const LENGTH = 60;
+const LENGTH = 30;
 
 const App = () => {
 	
@@ -14,6 +14,7 @@ const App = () => {
 	const [ correct, setCorrect ] = useState( 0 );
 	const [ incorrect, setIncorrect ] = useState( 0 );
 	const [ timeRemaining, updateTime ] = useState( LENGTH );
+
 	useEffect( () => {
 		if ( hasStarted && timeRemaining > 0 ) {
 			const timer = setTimeout( () => {
@@ -27,8 +28,6 @@ const App = () => {
 			setGameOverMan(true);
 		}
 	}, [ hasStarted, timeRemaining ]);
-
-	
 
 	return (
 		<main>
@@ -54,7 +53,7 @@ const App = () => {
 					<button 
 						className="start-game"
 						onClick={ () => setStarted(true) }>
-						Start Game
+						Start
 					</button>
 				}
 

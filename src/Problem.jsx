@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 
 function getRandomNumber() {
 	return Math.floor(Math.random() * 10);
@@ -9,6 +10,8 @@ function Problem( { onCorrect, onIncorrect } ) {
 	const [ a, setA ] = useState( getRandomNumber() );
 	const [ b, setB ] = useState( getRandomNumber() );
 	const [ answer, setAnswer ] = useState();
+	const [ correct, setCorrect ] = useState(0);
+	const [ correctAnswer, setCorrectAnswer ] = useState(null);
 
 	const nextProblem = () => {
 		setA( getRandomNumber() );
@@ -22,20 +25,44 @@ function Problem( { onCorrect, onIncorrect } ) {
 
 		let correctAnswer = a * b;
 		let guess = parseInt(answer, 10);
-		console.log("Correct Answer: ", correctAnswer);
-		console.log("Guess: ", guess);
+
 		if ( correctAnswer === guess ) {
-			onCorrect();
+			// switch to green and then nextProblem after 250
+			setCorrect(1);
+			setTimeout( () => { 
+				setCorrect(0);
+				onCorrect();
+				nextProblem();
+			}, 750 );
 		} else {
-			onIncorrect();
+			// switch to red/cross out and then nextProblem after 500
+			setCorrect(-1);
+			setCorrectAnswer(correctAnswer);
+			setTimeout( () => {
+				onIncorrect();
+				setCorrect(0);
+				setCorrectAnswer(null);
+				nextProblem();
+			}, 1500 );
 		}
-		nextProblem();
+	
 	};
 
 	const onAnswerChange = ( evt ) => {
 		const { value } = evt.target;
 		setAnswer( value )
 	}
+
+	const CorrectAnswer = () => {
+		if ( ! correctAnswer ) { return null; }
+		return (
+			<div className="correct-answer">
+				{correctAnswer}
+			</div>
+		);
+	}
+	
+	let answerClass = classNames('answer-field', { correct: correct === 1, incorrect: correct === -1 })
 
 	return (
 		<div className="problem">
@@ -55,11 +82,12 @@ function Problem( { onCorrect, onIncorrect } ) {
 					<input 
 						autoFocus
 						type="number" 
-						className="answer-field"
+						className={ answerClass }
 						value={ answer }
 						onChange={ onAnswerChange }
 					/>
 					<input type="submit" value="✔" />
+					<CorrectAnswer />
 				</form>
 			</div>
 		</div>
